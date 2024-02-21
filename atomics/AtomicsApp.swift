@@ -8,7 +8,10 @@
 import SwiftUI
 
 @main
-struct atomicsApp: App {
+struct AtomicsApp: App {
+    init() {
+        test()
+    }
     var body: some Scene {
         WindowGroup {
             ContentView()
