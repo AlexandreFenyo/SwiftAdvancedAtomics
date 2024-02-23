@@ -1,12 +1,67 @@
+// Objectif :
+// accès atomique à un objet de type classe depuis n'importe quel thread
+// types d'objets : ceux à accès possible même dans un contexte synchrone
+// types d'accès :
+// - dans un contexte synchrone :
+//   - accès à une copie toujours possible, mais on peut demander d'avoir une erreur si on ne veut pas faire de polling
+//   - accès exclusif pour lecture/écriture immédiat ou avec erreur : c'est un contexte synchrone donc délai de rétention court donc les autres demandes dans un contexte synchrone rendent une erreur ou font du polling
+//     on doit pouvoir faire plusieurs accès simultanés
+// - dans un contexte asynchrone :
+//   accès toujours possible mais faire un await obligatoirement pour avoir l'accès
+
+// on veut faire différentes opérations quand l'objet est verrouillé (par ex. récupérer une copie), on utilise pour cela une lambda fournie en paramètre
+
+// T est le type dont on veut manipuler une instance de manière atomique
+//  class Foo {
+//    var bar = 0
+//  }
+// - soit on fait créer un AT<T> et c'est via AT qu'on permet les manips
+//   let at_foo = AT<Foo>()
+//   at_foo.atomic { foo in
+//     foo.bar += 1
+//   }
+// - soit on fait dériver T d'une classe et c'est via des méthodes de cette classe que les manips seront permises
+//   class Foo : AT {
+//     var bar = 0
+//   }
+//   let at_foo = Foo()
+//   at_foo.atomic {
+//     self.bar += 1
+//   }
+//   cette solution ne marchera pas pour une struct, par ex. un tableau, mais c'est pas un pb
+//   Le problème c'est qu'on ne peut alors pas créer une classe atomique dérivant déjà d'une autre
+//   La solution la plus souple est donc 'est utilisant les generics
 //
-//  AdvancedAtomics.swift
-//  atomics
-//
-//  Created by Alexandre Fenyo on 21/02/2024.
-//
+// On veut que la méthode de verouillage puisse être fournie en paramètre
+// On crée donc un protocole AdvancedLock pour définir cette méthode de verouillage et on fournit quelques implémentations
 
 import Foundation
 
+protocol AdvancedLock {
+    
+}
+
+class AdvancedAtomic<T> {
+    let obj: T
+    func atomic(_ lambda: (_ t: T) -> Void) {
+        
+    }
+
+    init(_ obj: T) {
+        self.obj = obj
+    }
+}
+
+class Foo {
+    var bar = 0
+}
+
 func test() {
     print("début")
+
+    let at_foo = AdvancedAtomic<Foo>(Foo())
+    at_foo.atomic { foo in
+        foo.bar += 1
+    }
+    print(at_foo)
 }
