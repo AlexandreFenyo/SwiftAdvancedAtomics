@@ -12,6 +12,8 @@
 		5D6BEE7D2B8606ED000C6411 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D6BEE7C2B8606ED000C6411 /* Assets.xcassets */; };
 		5D6BEE802B8606ED000C6411 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D6BEE7F2B8606ED000C6411 /* Preview Assets.xcassets */; };
 		5D6BEE872B86077E000C6411 /* AdvancedAtomics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6BEE862B86077E000C6411 /* AdvancedAtomics.swift */; };
+		5D6BEE8B2B8963B4000C6411 /* pthreadLocks.c in Sources */ = {isa = PBXBuildFile; fileRef = 5D6BEE8A2B8963B4000C6411 /* pthreadLocks.c */; };
+		5D6BEE8D2B8972B6000C6411 /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6BEE8C2B8972B6000C6411 /* SpinLock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,10 @@
 		5D6BEE7C2B8606ED000C6411 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D6BEE7F2B8606ED000C6411 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5D6BEE862B86077E000C6411 /* AdvancedAtomics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedAtomics.swift; sourceTree = "<group>"; };
+		5D6BEE882B896338000C6411 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		5D6BEE892B8963B4000C6411 /* pthreadLocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pthreadLocks.h; sourceTree = "<group>"; };
+		5D6BEE8A2B8963B4000C6411 /* pthreadLocks.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pthreadLocks.c; sourceTree = "<group>"; };
+		5D6BEE8C2B8972B6000C6411 /* SpinLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinLock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,10 @@
 				5D6BEE7C2B8606ED000C6411 /* Assets.xcassets */,
 				5D6BEE7E2B8606ED000C6411 /* Preview Content */,
 				5D6BEE862B86077E000C6411 /* AdvancedAtomics.swift */,
+				5D6BEE8C2B8972B6000C6411 /* SpinLock.swift */,
+				5D6BEE882B896338000C6411 /* Bridging-Header.h */,
+				5D6BEE892B8963B4000C6411 /* pthreadLocks.h */,
+				5D6BEE8A2B8963B4000C6411 /* pthreadLocks.c */,
 			);
 			path = atomics;
 			sourceTree = "<group>";
@@ -140,8 +150,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D6BEE8D2B8972B6000C6411 /* SpinLock.swift in Sources */,
 				5D6BEE7B2B8606EC000C6411 /* ContentView.swift in Sources */,
 				5D6BEE792B8606EC000C6411 /* AtomicsApp.swift in Sources */,
+				5D6BEE8B2B8963B4000C6411 /* pthreadLocks.c in Sources */,
 				5D6BEE872B86077E000C6411 /* AdvancedAtomics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,6 +304,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.fenyo.apple.atomics;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "atomics/Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -321,6 +334,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.fenyo.apple.atomics;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "atomics/Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

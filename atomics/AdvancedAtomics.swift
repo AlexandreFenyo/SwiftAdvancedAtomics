@@ -3,7 +3,7 @@
 // types d'objets : ceux à accès possible même dans un contexte synchrone
 // types d'accès :
 // - dans un contexte synchrone :
-//   - accès à une copie toujours possible, mais on peut demander d'avoir une erreur si on ne veut pas faire de polling
+//   - accès à une copie toujours possible, mais on peut demander d'avoir une erreur si on ne veut pas faire de polling (spin lock)
 //   - accès exclusif pour lecture/écriture immédiat ou avec erreur : c'est un contexte synchrone donc délai de rétention court donc les autres demandes dans un contexte synchrone rendent une erreur ou font du polling
 //     on doit pouvoir faire plusieurs accès simultanés
 // - dans un contexte asynchrone :
@@ -35,20 +35,48 @@
 // On veut que la méthode de verouillage puisse être fournie en paramètre
 // On crée donc un protocole AdvancedLock pour définir cette méthode de verouillage et on fournit quelques implémentations
 
+// https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Multithreading/ThreadSafety/ThreadSafety.html
+
+
 import Foundation
 
 protocol AdvancedLock {
-    
+    static func initialize()
+    static func deinitialize()
+    func lock()
+    func trylock() -> Bool
+    func unlock()
 }
 
 class AdvancedAtomic<T> {
     let obj: T
-    func atomic(_ lambda: (_ t: T) -> Void) {
-        
+    let lock: AdvancedLock
+
+    init(_ obj: T, with_lock lock: AdvancedLock = SpinLock()) {
+        self.obj = obj
+        self.lock = lock
     }
 
-    init(_ obj: T) {
-        self.obj = obj
+    @discardableResult
+    func atomic(_ lambda: (_ t: T) -> Sendable) -> Sendable {
+        lock.lock()
+        let u = lambda(obj)
+        lock.unlock()
+        return u
+    }
+
+    enum ShouldRetry : Error {
+        case shouldRetry
+    }
+
+    func tryAtomic(_ lambda: (_ t: T) -> Sendable) -> Result<Sendable, ShouldRetry> {
+        let ret = lock.trylock()
+        if ret == false {
+            return .failure(.shouldRetry)
+        }
+        let retval = lambda(obj)
+        lock.unlock()
+        return .success(retval)
     }
 }
 
@@ -58,10 +86,17 @@ class Foo {
 
 func test() {
     print("début")
+    
+    SpinLock.initialize()
+    
+    let at_foo = AdvancedAtomic(Foo())
 
-    let at_foo = AdvancedAtomic<Foo>(Foo())
+    // incrémenter foo.bar
     at_foo.atomic { foo in
         foo.bar += 1
     }
-    print(at_foo)
+
+    // prendre une copie de foo.bar
+    let bar = at_foo.atomic { $0.bar }
+    print("bar:\(bar)")
 }
