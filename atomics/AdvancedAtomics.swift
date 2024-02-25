@@ -37,6 +37,7 @@
 
 // https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Multithreading/ThreadSafety/ThreadSafety.html
 
+// A AFAIRE : IMPLEMENTER AWAIT
 
 import Foundation
 
