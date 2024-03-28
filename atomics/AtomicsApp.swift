@@ -10,7 +10,8 @@ import SwiftUI
 @main
 struct AtomicsApp: App {
     init() {
-        test()
+        testAtomics()
+        testExceptions()
     }
     var body: some Scene {
         WindowGroup {

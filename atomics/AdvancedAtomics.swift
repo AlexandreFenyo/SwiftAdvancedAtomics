@@ -49,15 +49,19 @@ protocol AdvancedLock {
     func unlock()
 }
 
+enum AdvancedLockError: Error {
+    case shouldRetry
+}
+
 class AdvancedAtomic<T> {
     let obj: T
     let lock: AdvancedLock
-
+    
     init(_ obj: T, with_lock lock: AdvancedLock = SpinLock()) {
         self.obj = obj
         self.lock = lock
     }
-
+    
     @discardableResult
     func atomic(_ lambda: (_ t: T) -> Sendable) -> Sendable {
         lock.lock()
@@ -65,11 +69,12 @@ class AdvancedAtomic<T> {
         lock.unlock()
         return u
     }
-
+    
     enum ShouldRetry : Error {
         case shouldRetry
     }
-
+    
+    @discardableResult
     func tryAtomic(_ lambda: (_ t: T) -> Sendable) -> Result<Sendable, ShouldRetry> {
         let ret = lock.trylock()
         if ret == false {
@@ -79,25 +84,57 @@ class AdvancedAtomic<T> {
         lock.unlock()
         return .success(retval)
     }
+    
+    @discardableResult
+    func tryAtomicEx(_ lambda: (_ t: T) -> Sendable) throws -> Sendable {
+        let ret = lock.trylock()
+        if ret == false {
+            throw AdvancedLockError.shouldRetry
+        }
+        let retval = lambda(obj)
+        lock.unlock()
+        return retval
+    }
 }
 
 class Foo {
     var bar = 0
 }
 
-func test() {
-    print("début")
+func testAtomics() {
+    print("starting testtomics()")
     
     SpinLock.initialize()
     
     let at_foo = AdvancedAtomic(Foo())
 
     // incrémenter foo.bar
-    at_foo.atomic { foo in
+    at_foo.tryAtomic { foo in
         foo.bar += 1
     }
 
     // prendre une copie de foo.bar
     let bar = at_foo.atomic { $0.bar }
     print("bar:\(bar)")
+}
+
+func testExceptions() {
+    print("starting testExceptions()")
+    
+    SpinLock.initialize()
+    
+    let at_foo = AdvancedAtomic(Foo())
+    
+    // incrémenter foo.bar
+    do {
+        try at_foo.tryAtomicEx { foo in
+            foo.bar += 1
+        }
+        
+        // prendre une copie de foo.bar
+        let bar = try at_foo.tryAtomicEx { $0.bar }
+        print("bar:\(bar)")
+    } catch {
+        print("Exception thrown")
+    }
 }
