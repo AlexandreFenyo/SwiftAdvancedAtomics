@@ -14,7 +14,18 @@
 		5D6BEE872B86077E000C6411 /* AdvancedAtomics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6BEE862B86077E000C6411 /* AdvancedAtomics.swift */; };
 		5D6BEE8B2B8963B4000C6411 /* pthreadLocks.c in Sources */ = {isa = PBXBuildFile; fileRef = 5D6BEE8A2B8963B4000C6411 /* pthreadLocks.c */; };
 		5D6BEE8D2B8972B6000C6411 /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6BEE8C2B8972B6000C6411 /* SpinLock.swift */; };
+		5D8CF2042BB616C9003BADBD /* AtomicsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8CF2032BB616C9003BADBD /* AtomicsTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5D8CF2052BB616C9003BADBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D6BEE6D2B8606EC000C6411 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D6BEE742B8606EC000C6411;
+			remoteInfo = atomics;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		5D6BEE752B8606EC000C6411 /* atomics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = atomics.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -27,10 +38,19 @@
 		5D6BEE892B8963B4000C6411 /* pthreadLocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pthreadLocks.h; sourceTree = "<group>"; };
 		5D6BEE8A2B8963B4000C6411 /* pthreadLocks.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pthreadLocks.c; sourceTree = "<group>"; };
 		5D6BEE8C2B8972B6000C6411 /* SpinLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinLock.swift; sourceTree = "<group>"; };
+		5D8CF2012BB616C9003BADBD /* atomicsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = atomicsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D8CF2032BB616C9003BADBD /* AtomicsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtomicsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5D6BEE722B8606EC000C6411 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D8CF1FE2BB616C9003BADBD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -44,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				5D6BEE772B8606EC000C6411 /* atomics */,
+				5D8CF2022BB616C9003BADBD /* atomicsTests */,
 				5D6BEE762B8606EC000C6411 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				5D6BEE752B8606EC000C6411 /* atomics.app */,
+				5D8CF2012BB616C9003BADBD /* atomicsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -80,6 +102,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		5D8CF2022BB616C9003BADBD /* atomicsTests */ = {
+			isa = PBXGroup;
+			children = (
+				5D8CF2032BB616C9003BADBD /* AtomicsTests.swift */,
+			);
+			path = atomicsTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -100,6 +130,24 @@
 			productReference = 5D6BEE752B8606EC000C6411 /* atomics.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5D8CF2002BB616C9003BADBD /* atomicsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D8CF2072BB616C9003BADBD /* Build configuration list for PBXNativeTarget "atomicsTests" */;
+			buildPhases = (
+				5D8CF1FD2BB616C9003BADBD /* Sources */,
+				5D8CF1FE2BB616C9003BADBD /* Frameworks */,
+				5D8CF1FF2BB616C9003BADBD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5D8CF2062BB616C9003BADBD /* PBXTargetDependency */,
+			);
+			name = atomicsTests;
+			productName = atomicsTests;
+			productReference = 5D8CF2012BB616C9003BADBD /* atomicsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -107,11 +155,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1520;
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					5D6BEE742B8606EC000C6411 = {
 						CreatedOnToolsVersion = 15.2;
+					};
+					5D8CF2002BB616C9003BADBD = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 5D6BEE742B8606EC000C6411;
 					};
 				};
 			};
@@ -129,6 +181,7 @@
 			projectRoot = "";
 			targets = (
 				5D6BEE742B8606EC000C6411 /* atomics */,
+				5D8CF2002BB616C9003BADBD /* atomicsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -140,6 +193,13 @@
 			files = (
 				5D6BEE802B8606ED000C6411 /* Preview Assets.xcassets in Resources */,
 				5D6BEE7D2B8606ED000C6411 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D8CF1FF2BB616C9003BADBD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,7 +218,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5D8CF1FD2BB616C9003BADBD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D8CF2042BB616C9003BADBD /* AtomicsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5D8CF2062BB616C9003BADBD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D6BEE742B8606EC000C6411 /* atomics */;
+			targetProxy = 5D8CF2052BB616C9003BADBD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5D6BEE812B8606ED000C6411 /* Debug */ = {
@@ -340,6 +416,44 @@
 			};
 			name = Release;
 		};
+		5D8CF2082BB616C9003BADBD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JHZ84Y8364;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.fenyo.apple.atomicsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/atomics.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/atomics";
+			};
+			name = Debug;
+		};
+		5D8CF2092BB616C9003BADBD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JHZ84Y8364;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.fenyo.apple.atomicsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/atomics.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/atomics";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -357,6 +471,15 @@
 			buildConfigurations = (
 				5D6BEE842B8606ED000C6411 /* Debug */,
 				5D6BEE852B8606ED000C6411 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D8CF2072BB616C9003BADBD /* Build configuration list for PBXNativeTarget "atomicsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D8CF2082BB616C9003BADBD /* Debug */,
+				5D8CF2092BB616C9003BADBD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
